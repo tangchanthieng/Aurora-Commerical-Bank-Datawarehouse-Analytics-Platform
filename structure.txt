@@ -1,0 +1,75 @@
+Commercial-Bank-Analytics/
+│
+├── README.md
+├── .gitignore # prevent unnecessary files from being uploaded to Github
+├── requirements.txt # list python dependencies
+├── LICENSE
+│
+├── docs/
+│   ├── 01_Project_Proposal.md #overall project information
+│   ├── 02_Business_Requirements.md #business questions the solution must answer
+│   ├── 03_Project_Roadmap.md #phases of the project
+│   ├── 04_Data_Dictionary.md #metadata
+│   ├── 05_Database_Design.md #ERD diagrams desginning
+│   ├── 06_ETL_Design.md #ETL pipepline designning
+│   ├── 07_Data_Quality_Rules.md #list validation rules
+│   ├── 08_Testing.md #testcases
+│   ├── 09_Dashboard_Design.md #dashboard planning
+│   ├── 10_Project_Conclusion.md #summary
+│   └── Final_Report.pdf
+│
+├── data/
+│   ├── raw/
+│   │   ├── users_data.csv
+│   │   ├── cards_data.csv
+│   │   ├── transactions_data.csv
+│   │   └── mcc_codes.csv
+│   │
+│   ├── staging/ #intermediate outputs after extraction but before transformation
+│   ├── processed/ #holds cleaned and standardized datasets
+│   └── exports/ #reporting, Power BI refreshes, or archival purposes
+│
+├── sql/
+│   ├── 01_Create_Database.sql 
+│   ├── 02_Create_Schemas.sql
+│   ├── 03_Create_Bronze_Tables.sql #raw tables that mirror the csv files
+│   ├── 04_Create_Silver_Tables.sql #cleaned operational tables
+│   ├── 05_Create_Gold_Tables.sql #dimensional models
+│   ├── 06_Load_Bronze.sql #imports raw data
+│   ├── 07_Clean_Silver.sql #data cleansing and business rules
+│   ├── 08_Load_Gold.sql #populates the star schema
+│   ├── 09_Create_Views.sql #creates reporting views
+│   ├── 10_Create_Indexes.sql #adds clustered and non-clustered indexes
+│   ├── 11_Create_StoredProcedures.sql # encapsulates repeatable ETL and reporting tasks
+│   └── 12_Analysis_Queries.sql #joins, CTEs, window functions, ranking, and aggregation
+│
+├── python/
+│   ├── config.py #store configuration values such as file paths and SQL Server connection details
+│   ├── database.py #manage database connectivity using pyodbc or SQLAlchemy 
+│   ├── extract.py # read the four csv source files into Pandas DataFrames
+│   ├── validate.py #data profiling and applies quality rules before loading
+│   ├── transform.py #cleans data, converts data types, standardizes formats
+│   ├── load.py #processed data into SQL Server
+│   ├── feature_engineering.py #derives analytical features
+│   ├── customer_segmentation.py #clustering techniques
+│   ├── anomaly_detection.py #statistical methods or machine learning algorithms
+│   ├── export_powerbi.py #prepares curated datasets or extracts for Power BI consumption
+│   └── utils.py #logging, date handling, and reusable transformations
+│
+├── notebooks/
+│   ├── 01_EDA.ipynb #exploratory data analysis, profiling, and visualization
+│   ├── 02_Customer_Analysis.ipynb #demographic insights
+│   └── 03_Fraud_Analysis.ipynb #anomalous transactions
+│
+├── powerbi/
+│   ├── CommercialBank.pbix
+│   └── Dashboard_Mockup.pdf
+│
+├── diagrams/
+│   ├── Architecture.drawio
+│   ├── ERD.drawio
+│   ├── StarSchema.drawio
+│   ├── ETL.drawio
+│   └── PowerBI_Model.drawio
+│
+└── images/
