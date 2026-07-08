@@ -1,0 +1,11 @@
+pandas
+numpy
+pyodbc
+sqlalchemy
+openpyxl
+matplotlib
+scikit-learn
+jupyter
+
+# recreate python env with
+# pip install -r requirements.txt
