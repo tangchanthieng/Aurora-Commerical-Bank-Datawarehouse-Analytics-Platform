@@ -1,26 +1,25 @@
-// SQL script to create the database and schemas for the Commercial Banking Analysis project
-
+-- SQL script to create the database and schemas for the Commercial Banking Analysis project
 
 USE master;
 GO
 
-IF EXISTS (SELECT name FROM sys.databases WHERE name = N'DB_Aurora_Bank')
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'DB_Aurora_Bank')
     DROP DATABASE DB_Aurora_Bank;
 GO
 
 CREATE DATABASE DB_Aurora_Bank;
 GO
 
-// SQL script to create the schemas for the Commercial Banking Analysis project
+-- SQL script to create the schemas for the Commercial Banking Analysis project
 
 USE DB_Aurora_Bank;
 GO
 
-CREATE SCHEMA bronze;
+CREATE SCHEMA Bronze;
 GO
 
-CREATE SCHEMA silver;
+CREATE SCHEMA Silver;
 GO
 
-CREATE SCHEMA gold;
+CREATE SCHEMA Gold;
 GO
