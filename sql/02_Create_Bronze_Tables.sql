@@ -1,7 +1,7 @@
 USE DB_Aurora_Bank;
 GO
 
-CREATE TABLE bronze.clients (
+CREATE TABLE Bronze.clients (
     client_id VARCHAR(50), 
     current_age VARCHAR(10), 
     retirement_age VARCHAR(10),
@@ -18,7 +18,7 @@ CREATE TABLE bronze.clients (
     num_credit_cards VARCHAR(10)
 );
 
-CREATE TABLE bronze..cards (
+CREATE TABLE Bronze.cards (
     card_id VARCHAR(50), 
     client_id VARCHAR(50), 
     card_brand VARCHAR(100),
@@ -33,7 +33,7 @@ CREATE TABLE bronze..cards (
     year_pin_last_changed VARCHAR(10)
 );
 
-CREATE TABLE bronze.transactions (
+CREATE TABLE Bronze.transactions (
     transaction_id VARCHAR(50), 
     date VARCHAR(10), 
     client_id VARCHAR(50),
@@ -48,7 +48,7 @@ CREATE TABLE bronze.transactions (
     errors VARCHAR(255)
 );
 
-CREATE TABLE bronze.mcc (
+CREATE TABLE Bronze.mcc (
     mcc_id VARCHAR(10),
     Description VARCHAR(255)
 );
