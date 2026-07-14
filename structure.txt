@@ -1,33 +1,23 @@
-Commercial-Bank-Analytics/
+Aurora Commercial Banking Customer Analytics Platform/
 │
 ├── README.md
-├── .gitignore # prevent unnecessary files from being uploaded to Github
-├── requirements.txt # list python dependencies
+├── .gitignore
+├── requirements.txt
 ├── LICENSE
 │
 ├── docs/
-│   ├── 01_Project_Proposal.md #overall project information
-│   ├── 02_Business_Requirements.md #business questions the solution must answer
-│   ├── 03_Project_Roadmap.md #phases of the project
-│   ├── 04_Data_Dictionary.md #metadata
-│   ├── 05_Database_Design.md #ERD diagrams desginning
-│   ├── 06_ETL_Design.md #ETL pipepline designning
-│   ├── 07_Data_Quality_Rules.md #list validation rules
-│   ├── 08_Testing.md #testcases
-│   ├── 09_Dashboard_Design.md #dashboard planning
-│   ├── 10_Project_Conclusion.md #summary
-│   └── Final_Report.pdf
+│   ├── 01_Project_Overview.md
+│   ├── 02_Data_Architecture.md
 │
 ├── data/
-│   ├── raw/
+│   ├── raw/ #source origin data
 │   │   ├── users_data.csv
 │   │   ├── cards_data.csv
 │   │   ├── transactions_data.csv
 │   │   └── mcc_codes.csv
 │   │
 │   ├── staging/ #intermediate outputs after extraction but before transformation
-│   ├── processed/ #holds cleaned and standardized datasets
-│   └── exports/ #reporting, Power BI refreshes, or archival purposes
+│   ├── cleaned/ #holds cleaned and standardized datasets
 │
 ├── sql/
 │   ├── 01_Create_Database.sql 
@@ -53,23 +43,11 @@ Commercial-Bank-Analytics/
 │   ├── feature_engineering.py #derives analytical features
 │   ├── customer_segmentation.py #clustering techniques
 │   ├── anomaly_detection.py #statistical methods or machine learning algorithms
-│   ├── export_powerbi.py #prepares curated datasets or extracts for Power BI consumption
 │   └── utils.py #logging, date handling, and reusable transformations
 │
-├── notebooks/
-│   ├── 01_EDA.ipynb #exploratory data analysis, profiling, and visualization
-│   ├── 02_Customer_Analysis.ipynb #demographic insights
-│   └── 03_Fraud_Analysis.ipynb #anomalous transactions
-│
 ├── powerbi/
-│   ├── CommercialBank.pbix
+│   ├── Dashboard_Design.pbix
 │   └── Dashboard_Mockup.pdf
 │
 ├── diagrams/
-│   ├── Architecture.drawio
-│   ├── ERD.drawio
-│   ├── StarSchema.drawio
-│   ├── ETL.drawio
-│   └── PowerBI_Model.drawio
-│
-└── images/
+│   ├── Data_Architecture.lucid
