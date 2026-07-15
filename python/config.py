@@ -10,28 +10,13 @@ PROCESSED_DIR = DATA_DIR / "cleaned"
 
 # Database Configuration (SQL Server Express)
 DB_CONFIG = {
-    "data_source": r".\SQLEXPRESS",
-    "integrated_security": True,
-    "persist_security_info": False,
-    "pooling": False,
-    "multiple_active_result_sets": False,
-    "encrypt": True,
-    "trust_server_certificate": True,
-    "application_name": "SQL Server Management Studio",
-    "command_timeout": 0
+    "driver": "ODBC Driver 17 for SQL Server",
+    "server": r".\SQLEXPRESS",
+    "database": "DB_Aurora_Bank",
+    "trusted_connection": "yes"
 }
 
-CONN_STR = (
-    r"Data Source=.\SQLEXPRESS;"
-    r"Integrated Security=True;"
-    r"Persist Security Info=False;"
-    r"Pooling=False;"
-    r"MultipleActiveResultSets=False;"
-    r"Encrypt=True;"
-    r"TrustServerCertificate=True;"
-    r"Application Name=SQL Server Management Studio;"
-    r"Command Timeout=0"
-)
+CONN_STR = f"DRIVER={DB_CONFIG['driver']};SERVER={DB_CONFIG['server']};DATABASE={DB_CONFIG['database']};Trusted_Connection={DB_CONFIG['trusted_connection']};"
 
 # Ensure directories exist
 for folder in [RAW_DIR, STAGING_DIR, PROCESSED_DIR]:
