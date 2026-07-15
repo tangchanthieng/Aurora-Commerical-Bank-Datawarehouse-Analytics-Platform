@@ -1,11 +1,26 @@
-import pandas as pd
-from config import STAGING_DIR, PROCESSED_DIR
+import sys
+from pathlib import Path
 
+import pandas as pd
+
+sys.path.append(str(Path(__file__).resolve().parent))
+
+try:
+    from .config import STAGING_DIR, PROCESSED_DIR
+except ImportError:  # pragma: no cover - allows direct script execution
+    from config import STAGING_DIR, PROCESSED_DIR
+
+
+def strip_string_columns(df: pd.DataFrame) -> pd.DataFrame:
+    string_columns = df.select_dtypes(include=["object", "string"]).columns
+    for col in string_columns:
+        df[col] = df[col].apply(lambda x: x.strip() if isinstance(x, str) else x)
+    return df
 
 def transform_users():
     df = pd.read_csv(STAGING_DIR / "stg_users_data.csv")
 
-    df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+    df = strip_string_columns(df)
     df["gender"] = df["gender"].astype(str).str.upper().replace({"M": "Male", "MALE": "Male", "F": "Female", "FEMALE": "Female"})
     df["latitude"] = pd.to_numeric(df["latitude"], errors="coerce")
     df["longitude"] = pd.to_numeric(df["longitude"], errors="coerce")
@@ -32,7 +47,7 @@ def transform_users():
 def transform_cards():
     df = pd.read_csv(STAGING_DIR / "stg_cards_data.csv")
 
-    df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+    df = strip_string_columns(df)
     df["card_brand"] = df["card_brand"].astype(str).str.upper()
     df["card_type"] = df["card_type"].astype(str).str.upper()
     df["has_chip"] = df["has_chip"].astype(str).str.upper().replace({"Y": "YES", "YES": "YES", "N": "NO", "NO": "NO"})
@@ -48,8 +63,8 @@ def transform_cards():
     for col in ["card_id", "client_id", "cvv", "num_cards_issued", "year_pin_last_changed"]:
         df[col] = pd.to_numeric(df[col], errors="coerce", downcast="integer")
 
-    df["expires_dt"] = pd.to_datetime(df["expires"], format="%b-%y", errors="coerce")
-    df["acct_open_dt"] = pd.to_datetime(df["acct_open_date"], format="%b-%y", errors="coerce")
+    df["expires_dt"] = pd.to_datetime(df["expires"], format="%Y-%m-%d", errors="coerce")
+    df["acct_open_dt"] = pd.to_datetime(df["acct_open_date"], format="%Y-%m-%d", errors="coerce")
 
     invalid_dates = df["expires_dt"] < df["acct_open_dt"]
     invalid_pin_year = df["year_pin_last_changed"].notna() & df["acct_open_dt"].notna() & (df["year_pin_last_changed"].astype("Int64") < df["acct_open_dt"].dt.year)
@@ -67,8 +82,8 @@ def transform_cards():
 def transform_transactions():
     df = pd.read_csv(STAGING_DIR / "stg_transactions_data.csv")
 
-    df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-    df["date"] = pd.to_datetime(df["date"], format="%m/%d/%y %H:%M", errors="coerce")
+    df = strip_string_columns(df)
+    df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d %H:%M:%S", errors="coerce")
     df["errors"] = df["errors"].replace({"": None})
     df["merchant_city"] = df["merchant_city"].astype(str).str.upper()
     df["merchant_state"] = df["merchant_state"].astype(str).str.upper()
@@ -79,7 +94,6 @@ def transform_transactions():
 
     df["zip"] = df["zip"].astype(str).str.strip()
     df["zip"] = df["zip"].replace({"nan": None, "": None})
-    # Ensure `date` column is output in `%m/%d/%y %H:%M` format for SQL ingestion
     df["date"] = df["date"].dt.strftime("%m/%d/%y %H:%M")
 
     df.to_csv(PROCESSED_DIR / "clean_transactions.csv", index=False)
@@ -89,7 +103,7 @@ def transform_transactions():
 def transform_mcc():
     df = pd.read_csv(STAGING_DIR / "stg_mcc_codes.csv")
 
-    df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+    df = strip_string_columns(df)
     df["mcc_id"] = pd.to_numeric(df["mcc_id"], errors="coerce", downcast="integer")
     df["Description"] = df["Description"].replace({"": None})
 
