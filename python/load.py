@@ -23,11 +23,9 @@ def bulk_insert_to_bronze():
             ]
             
             cursor.execute(f"TRUNCATE TABLE {table}")
-            
             cols = ", ".join(df.columns)
             placeholders = ", ".join(["?"] * len(df.columns))
             sql = f"INSERT INTO {table} ({cols}) VALUES ({placeholders})"
-            
             cursor.executemany(sql, data_to_insert)
             print(f"Loaded {len(df)} records into raw table {table}")
 
