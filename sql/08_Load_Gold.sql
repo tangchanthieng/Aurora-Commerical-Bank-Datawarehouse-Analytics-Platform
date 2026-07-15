@@ -1,4 +1,4 @@
-USE CommercialBankAnalytics;
+USE DB_Aurora_Bank;
 GO
 
 -- STEP 1: Always empty the Fact (dependent) table FIRST to clear active references
@@ -15,7 +15,19 @@ INSERT INTO gold.dim_card SELECT * FROM silver.cards_clean;
 INSERT INTO gold.dim_mcc SELECT * FROM silver.mcc_clean;
 
 -- STEP 4: Reload Fact Layer from Silver tables
-INSERT INTO gold.fact_transactions (transaction_id, date, client_id, card_id, amount, use_chip, merchant_id, merchant_city, merchant_state, zip, mcc_id, errors)
+INSERT INTO gold.fact_transactions (
+    transaction_id, 
+    date, 
+    client_id, 
+    card_id, 
+    amount, 
+    use_chip, 
+    merchant_id, 
+    merchant_city, 
+    merchant_state, 
+    zip, 
+    mcc_id, 
+    errors)
 SELECT transaction_id, date, client_id, card_id, amount, use_chip, merchant_id, merchant_city, merchant_state, zip, mcc_id, errors 
 FROM silver.transactions_clean;
 GO
