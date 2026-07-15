@@ -15,11 +15,11 @@ GO
 USE DB_Aurora_Bank;
 GO
 
-CREATE SCHEMA Bronze;
+CREATE SCHEMA bronze;
 GO
 
-CREATE SCHEMA Silver;
+CREATE SCHEMA silver;
 GO
 
-CREATE SCHEMA Gold;
+CREATE SCHEMA gold;
 GO
