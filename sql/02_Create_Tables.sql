@@ -3,15 +3,15 @@ USE DB_Aurora_Bank;
 GO
 
 CREATE TABLE bronze.users_raw (
-    client_id BIGINT, 
+    client_id INT, 
     current_age INT, 
     retirement_age INT,
     birth_year INT, 
     birth_month INT, 
-    gender VARCHAR(25),
+    gender VARCHAR(50),
     address VARCHAR(255), 
-    latitude DECIMAL(9,6), 
-    longitude DECIMAL(9,6),
+    latitude DECIMAL(18,6), 
+    longitude DECIMAL(18,6),
     per_capita_income VARCHAR(50), 
     yearly_income VARCHAR(50), 
     total_debt VARCHAR(50),
@@ -20,11 +20,11 @@ CREATE TABLE bronze.users_raw (
 );
 
 CREATE TABLE bronze.cards_raw (
-    card_id BIGINT, 
-    client_id BIGINT, 
-    card_brand VARCHAR(50),
-    card_type VARCHAR(50), 
-    card_number INT, 
+    card_id INT, 
+    client_id INT, 
+    card_brand VARCHAR(100),
+    card_type VARCHAR(100), 
+    card_number BIGINT, 
     expires DATE, 
     cvv INT, 
     has_chip VARCHAR(50), 
@@ -35,22 +35,22 @@ CREATE TABLE bronze.cards_raw (
 );
 
 CREATE TABLE bronze.transactions_raw (
-    transaction_id BIGINT, 
+    transaction_id INT, 
     date DATETIME, 
-    client_id BIGINT,
-    card_id BIGINT, 
-    amount DECIMAL(12,2), 
+    client_id INT,
+    card_id INT, 
+    amount DECIMAL(18,6), 
     use_chip VARCHAR(50),
-    merchant_id BIGINT, 
+    merchant_id INT, 
     merchant_city VARCHAR(100), 
     merchant_state VARCHAR(100),
-    zip INT, 
-    mcc_id BIGINT, 
+    zip VARCHAR(50), 
+    mcc_id INT, 
     errors VARCHAR(100)
 );
 
 CREATE TABLE bronze.mcc_raw (
-    mcc_id BIGINT,
+    mcc_id INT,
     Description VARCHAR(255)
 );
 GO
@@ -60,15 +60,15 @@ USE DB_Aurora_Bank;
 GO
 
 CREATE TABLE silver.users_clean (
-    client_id INT PRIMARY KEY, 
+    client_id INT PRIMARY KEY,
     current_age INT, 
     retirement_age INT,
     birth_year INT, 
     birth_month INT, 
-    gender VARCHAR(25), 
-    address VARCHAR(255),
-    latitude DECIMAL(9,6), 
-    longitude DECIMAL(9,6),
+    gender VARCHAR(50),
+    address VARCHAR(255), 
+    latitude DECIMAL(18,6), 
+    longitude DECIMAL(18,6),
     per_capita_income INT, 
     yearly_income INT, 
     total_debt INT,
@@ -79,9 +79,9 @@ CREATE TABLE silver.users_clean (
 CREATE TABLE silver.cards_clean (
     card_id INT PRIMARY KEY,
     client_id INT, 
-    card_brand VARCHAR(50),
-    card_type VARCHAR(50), 
-    card_number INT, 
+    card_brand VARCHAR(100),
+    card_type VARCHAR(100), 
+    card_number BIGINT, 
     expires DATE, 
     cvv INT, 
     has_chip VARCHAR(50), 
@@ -92,18 +92,18 @@ CREATE TABLE silver.cards_clean (
 );
 
 CREATE TABLE silver.transactions_clean (
-    transaction_id INT PRIMARY KEY, 
+    transaction_id INT PRIMARY KEY,
     date DATETIME, 
     client_id INT,
     card_id INT, 
     amount DECIMAL(18,6), 
-    use_chip VARCHAR(50), 
-    merchant_id INT,
+    use_chip VARCHAR(50),
+    merchant_id INT, 
     merchant_city VARCHAR(100), 
-    merchant_state VARCHAR(50), 
-    zip VARCHAR(50),
+    merchant_state VARCHAR(100),
+    zip INT, 
     mcc_id INT, 
-    errors VARCHAR(255)
+    errors VARCHAR(100)
 );
 
 CREATE TABLE silver.mcc_clean (
@@ -124,46 +124,37 @@ CREATE TABLE gold.dim_mcc (
 
 -- 2. Customer Dimension
 CREATE TABLE gold.dim_customer (
-    client_id INT PRIMARY KEY, 
+    client_id INT PRIMARY KEY,
     current_age INT, 
     retirement_age INT,
     birth_year INT, 
-    birth_month INT,
-    gender VARCHAR(25), 
-    address VARCHAR(255),
-    latitude DECIMAL(9,6),
-    longitude DECIMAL(9,6),  
-    yearly_income INT,
-    total_debt INT, 
+    birth_month INT, 
+    gender VARCHAR(50),
+    address VARCHAR(255), 
+    latitude DECIMAL(18,6), 
+    longitude DECIMAL(18,6),
+    per_capita_income INT, 
+    yearly_income INT, 
+    total_debt INT,
     credit_score INT, 
     num_credit_cards INT
 );
 
 -- 3. Card Dimension
 CREATE TABLE gold.dim_card (
-    card_id INT PRIMARY KEY, 
+    card_id INT PRIMARY KEY,
     client_id INT, 
-    card_brand VARCHAR(50),
-    card_type VARCHAR(50), 
-    card_number VARCHAR(50), 
-    expires DATE,
+    card_brand VARCHAR(100),
+    card_type VARCHAR(100), 
+    card_number BIGINT, 
+    expires DATE, 
     cvv INT, 
     has_chip VARCHAR(50), 
-    num_cards_issued INT, 
-    credit_limit INT,
-    acct_open_date DATE,
-    year_pin_last_changed INT,
+    num_cards_issued INT,
+    credit_limit INT, 
+    acct_open_date DATE, 
+    year_pin_last_changed INT
     FOREIGN KEY (client_id) REFERENCES gold.dim_customer(client_id)
-);
-
--- 4. Merchant Dimension
-CREATE TABLE gold.dim_merchant (
-    merchant_id INT PRIMARY KEY,
-    merchant_city VARCHAR(100), 
-    merchant_state VARCHAR(50), 
-    zip VARCHAR(50),
-    mcc_id INT,
-    FOREIGN KEY (mcc_id) REFERENCES gold.dim_mcc(mcc_id)
 );
 
 -- 5. Fact Transactions
@@ -175,11 +166,13 @@ CREATE TABLE gold.fact_transactions (
     amount DECIMAL(18,6), 
     use_chip VARCHAR(50), 
     merchant_id INT,
+    merchant_city VARCHAR(100), 
+    merchant_state VARCHAR(50), 
+    zip VARCHAR(50),
     mcc_id INT, 
     errors VARCHAR(255),
     FOREIGN KEY (client_id) REFERENCES gold.dim_customer(client_id),
     FOREIGN KEY (card_id) REFERENCES gold.dim_card(card_id),
-    FOREIGN KEY (merchant_id) REFERENCES gold.dim_merchant(merchant_id),
     FOREIGN KEY (mcc_id) REFERENCES gold.dim_mcc(mcc_id)
 );
 GO
