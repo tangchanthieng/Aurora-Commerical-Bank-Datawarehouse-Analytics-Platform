@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS bronze.cards_raw;
+DROP TABLE IF EXISTS bronze.mcc_raw;
+DROP TABLE IF EXISTS bronze.transactions_raw;
+DROP TABLE IF EXISTS bronze.users_raw;
+DROP TABLE IF EXISTS silver.cards_clean;
+DROP TABLE IF EXISTS silver.mcc_clean;
+DROP TABLE IF EXISTS silver.transactions_clean;
+DROP TABLE IF EXISTS silver.users_clean;
+DROP TABLE IF EXISTS gold.dim_card;
+DROP TABLE IF EXISTS gold.dim_customer;
+DROP TABLE IF EXISTS gold.dim_mcc;
+DROP TABLE IF EXISTS gold.dim_merchant;
+DROP TABLE IF EXISTS gold.fact_transactions;
