@@ -23,9 +23,9 @@ INSERT INTO gold.fact_transactions (
     amount, 
     use_chip, 
     merchant_id, 
-    merchant_city, 
-    merchant_state, 
-    zip, 
+    merchant_city,
+    merchant_state,
+    zip,
     mcc_id, 
     errors)
 SELECT transaction_id, date, client_id, card_id, amount, use_chip, merchant_id, merchant_city, merchant_state, zip, mcc_id, errors 
