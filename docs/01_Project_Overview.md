@@ -188,14 +188,8 @@ The project will be considered successful if it achieves the following measurabl
 The project will deliver the following artefacts:
 
 `Documentation`
-- Project Proposal
-- Business Requirements
-- Data Dictionary
-- Database Design
-- ETL Design
-- Testing Documentation
-- Dashboard Design
-- Final Project Report
+- Project Overview
+- Data Architecture
 
 `Database`
 - SQL Server Database
@@ -204,15 +198,12 @@ The project will deliver the following artefacts:
 - Gold Layer
 - Star Schema
 - SQL Views
-- Stored Procedures
 
 `Python` 
 - ETL Pipeline
 - Data Validation
 - Feature Engineering
-- Customer Segmentation
 - Anomaly Detection
-- Export Utilities
 
 `Analytics`
 - SQL Analytical Queries
@@ -221,10 +212,9 @@ The project will deliver the following artefacts:
 
 `Reporting`
 - Power BI Dashboard
-- Executive KPI Dashboard
 - Customer Dashboard
 - Transaction Dashboard
-- Merchant Dashboard
+- Risk Management Dashboard
 
 `Source Control`
 - Git Repository
@@ -240,7 +230,7 @@ The project will deliver the following artefacts:
 
 - Database: SQL Server 2022 Express
 - Database Management: SQL Server Management Studio (SSMS 22)
-- Programming Language: Python 3.10
+- Programming Language: Python 3.14
 - IDE: Visual Studio Code
 - Data Processing: Pandas, NumPy
 - Database Connectivity: SQLAlchemy, pyodbc

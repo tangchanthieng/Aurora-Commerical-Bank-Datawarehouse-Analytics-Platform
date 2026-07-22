@@ -29,7 +29,7 @@ To guarantee data quality and auditability, data transitions through three disti
 - Bronze (Raw Ingestion): Captures exact replicas of incoming operational tables with minimal overhead. Data includes tracking metadata (e.g., ingestion timestamps) to maintain a complete historical audit path.
 - Silver (Cleaned & Conformed): Applies structural enforcement. Raw text identifiers are parsed, currency types (like $59,696) are stripped down to numerical floats, dates are cast into ISO formats, and referential checks are evaluated.
 - Gold (Curated Business Insights): Formats clean datasets into an analytical Star Schema layout. Aggregated views and structured datasets are deployed specifically to maximize performance for Power BI report consumption.
-
+- Kindly refer to `image/diagram/Data_Architecture.png` to review data architecture diagram.
 ---
 
 ### Star Schema
