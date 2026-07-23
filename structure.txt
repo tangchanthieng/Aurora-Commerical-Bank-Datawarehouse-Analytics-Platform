@@ -3,7 +3,7 @@ Aurora Commercial Banking Customer Analytics Platform/
 ├── README.md
 ├── .gitignore
 ├── requirements.txt
-├── LICENSE
+├── structure.txt
 │
 ├── docs/
 │   ├── 01_Project_Overview.md
@@ -22,32 +22,29 @@ Aurora Commercial Banking Customer Analytics Platform/
 ├── sql/
 │   ├── 01_Create_Database.sql 
 │   ├── 02_Create_Schemas.sql
-│   ├── 03_Create_Bronze_Tables.sql #raw tables that mirror the csv files
-│   ├── 04_Create_Silver_Tables.sql #cleaned operational tables
-│   ├── 05_Create_Gold_Tables.sql #dimensional models
-│   ├── 06_Load_Bronze.sql #imports raw data
-│   ├── 07_Clean_Silver.sql #data cleansing and business rules
-│   ├── 08_Load_Gold.sql #populates the star schema
-│   ├── 09_Create_Views.sql #creates reporting views
-│   ├── 10_Create_Indexes.sql #adds clustered and non-clustered indexes
-│   ├── 11_Create_StoredProcedures.sql # encapsulates repeatable ETL and reporting tasks
-│   └── 12_Analysis_Queries.sql #joins, CTEs, window functions, ranking, and aggregation
+│   ├── 03_Drop_Tables.sql
+│   ├── 04_Load_Gold.sql
+│   └── 05_Gold_Views.sql
 │
 ├── python/
 │   ├── config.py #store configuration values such as file paths and SQL Server connection details
 │   ├── database.py #manage database connectivity using pyodbc or SQLAlchemy 
 │   ├── extract.py # read the four csv source files into Pandas DataFrames
 │   ├── validate.py #data profiling and applies quality rules before loading
-│   ├── transform.py #cleans data, converts data types, standardizes formats
-│   ├── load.py #processed data into SQL Server
-│   ├── feature_engineering.py #derives analytical features
-│   ├── customer_segmentation.py #clustering techniques
-│   ├── anomaly_detection.py #statistical methods or machine learning algorithms
+│   ├── transform_silver.py #cleans data, converts data types, standardizes formats
+│   ├── load_bronze.py #processed data into SQL Server
+│   ├── load_silver.py
 │   └── utils.py #logging, date handling, and reusable transformations
 │
 ├── powerbi/
-│   ├── Dashboard_Design.pbix
-│   └── Dashboard_Mockup.pdf
+│   ├── dashboard_aurora.pbix
+│   └── dashboard_aurora.pdf
 │
-├── diagrams/
-│   ├── Data_Architecture.lucid
+├── notebook/
+│   └── raw_data_overview.ipynb
+│
+├── image/
+│   ├── client profiling/
+│   ├── diagram/
+│   ├── marketing/
+│   └── risk management/
